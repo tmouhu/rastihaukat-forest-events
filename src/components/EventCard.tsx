@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Event } from "@/types/event";
 import { getEventTypeName } from "@/services/eventService";
-import { Calendar, Clock, MapPin, ChevronDown, ChevronUp, Navigation, Car, FileText, Medal } from "lucide-react";
+import { Calendar, Clock, MapPin, ChevronDown, ChevronUp, Navigation, Car, FileText, Medal, ExternalLink, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -26,17 +26,25 @@ const EventCard = ({ event }: EventCardProps) => {
     return format(date, "HH:mm");
   };
 
+  const isUpcoming = !event.isPast;
+
   return (
-    <Card className={`w-full overflow-hidden transition-all duration-300 ${expanded ? 'shadow-md' : 'shadow-sm'}`}>
+    <Card className={`w-full overflow-hidden transition-all duration-300 ${expanded ? 'shadow-md' : 'shadow-sm'} ${event.isActive ? 'ring-2 ring-brand-orange border-brand-orange' : ''}`}>
       <CardHeader className="p-4 pb-0">
         <div className="flex justify-between items-start">
           <Badge className={`event-type-badge ${event.eventType}`}>
             {getEventTypeName(event.eventType)}
           </Badge>
           
+          {event.isActive && (
+            <Badge variant="outline" className="border-brand-orange text-brand-orange font-semibold">
+              Käynnissä nyt!
+            </Badge>
+          )}
+          
           {event.isPast && event.resultsLink && (
             <Badge variant="outline" className="border-brand-red text-brand-red">
-              Results Available
+              Tulokset saatavilla
             </Badge>
           )}
         </div>
@@ -50,7 +58,7 @@ const EventCard = ({ event }: EventCardProps) => {
               <p className="font-medium">{formatDate(event.startDateTime)}</p>
               {formatDate(event.startDateTime) !== formatDate(event.endDateTime) && (
                 <p className="text-sm text-muted-foreground">
-                  to {formatDate(event.endDateTime)}
+                  - {formatDate(event.endDateTime)}
                 </p>
               )}
             </div>
@@ -70,17 +78,28 @@ const EventCard = ({ event }: EventCardProps) => {
             <div>
               <p className="font-medium">{event.locationName}</p>
               <p className="text-sm text-muted-foreground">
-                {event.coordinates.lat.toFixed(3)}, {event.coordinates.lon.toFixed(3)}
+                {event.streetAddress}
               </p>
             </div>
           </div>
           
-          {event.navigationLink && (
+          {isUpcoming && event.navigationLink && (
             <div className="ml-8">
               <Button variant="outline" size="sm" className="text-brand-blue" asChild>
                 <a href={event.navigationLink} target="_blank" rel="noopener noreferrer">
                   <Navigation className="h-4 w-4 mr-2" />
-                  Navigate
+                  Navigoi
+                </a>
+              </Button>
+            </div>
+          )}
+          
+          {isUpcoming && event.rastilippuLink && (
+            <div className="ml-8">
+              <Button variant="outline" size="sm" className="text-brand-orange" asChild>
+                <a href={event.rastilippuLink} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Ilmoittaudu Rastilipussa
                 </a>
               </Button>
             </div>
@@ -91,12 +110,24 @@ const EventCard = ({ event }: EventCardProps) => {
           <div className="mt-4 animate-fade-in">
             <Separator className="mb-4" />
             
+            {event.courseSetter && (
+              <div className="mb-4">
+                <div className="flex items-start">
+                  <User className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium">Ratamestari</p>
+                    <p className="text-sm">{event.courseSetter}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             {event.parkingInfo && (
               <div className="mb-4">
                 <div className="flex items-start">
                   <Car className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-medium">Parking</p>
+                    <p className="font-medium">Pysäköinti</p>
                     <p className="text-sm">{event.parkingInfo}</p>
                   </div>
                 </div>
@@ -105,7 +136,7 @@ const EventCard = ({ event }: EventCardProps) => {
             
             {event.tracks.length > 0 && (
               <div className="mb-4">
-                <h4 className="font-medium mb-2">Tracks</h4>
+                <h4 className="font-medium mb-2">Radat</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {event.tracks.map((track, index) => (
                     <div key={index} className="flex items-center bg-muted rounded-md p-2">
@@ -127,7 +158,7 @@ const EventCard = ({ event }: EventCardProps) => {
                 <div className="flex items-start">
                   <FileText className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-medium">Notes</p>
+                    <p className="font-medium">Lisätiedot</p>
                     <p className="text-sm">{event.notes}</p>
                   </div>
                 </div>
@@ -139,10 +170,10 @@ const EventCard = ({ event }: EventCardProps) => {
                 <div className="flex items-start">
                   <Medal className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-medium">Results</p>
+                    <p className="font-medium">Tulokset</p>
                     <Button variant="link" className="h-auto p-0 text-brand-blue" asChild>
                       <a href={event.resultsLink} target="_blank" rel="noopener noreferrer">
-                        View Results
+                        Katso tulokset Navisportissa
                       </a>
                     </Button>
                   </div>
@@ -154,13 +185,13 @@ const EventCard = ({ event }: EventCardProps) => {
               <div className="rounded-md overflow-hidden border mt-4">
                 <img 
                   src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                  alt="Event map preview" 
+                  alt="Tapahtuman kartta" 
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-2 bg-muted flex justify-end">
                   <Button variant="outline" size="sm">
                     <FileText className="h-4 w-4 mr-2" />
-                    View Full Map
+                    Katso koko kartta
                   </Button>
                 </div>
               </div>
@@ -178,12 +209,12 @@ const EventCard = ({ event }: EventCardProps) => {
           {expanded ? (
             <>
               <ChevronUp className="h-4 w-4 mr-2" />
-              Show Less
+              Näytä vähemmän
             </>
           ) : (
             <>
               <ChevronDown className="h-4 w-4 mr-2" />
-              Show More
+              Näytä lisää
             </>
           )}
         </Button>

@@ -13,7 +13,17 @@ const EventsSection = () => {
     const getEvents = async () => {
       try {
         const data = await fetchUpcomingEvents();
-        setEvents(data);
+        
+        // Check if any events are currently active
+        const now = new Date();
+        const updatedEvents = data.map(event => {
+          const startTime = new Date(event.startDateTime);
+          const endTime = new Date(event.endDateTime);
+          const isActive = now >= startTime && now <= endTime;
+          return { ...event, isActive };
+        });
+        
+        setEvents(updatedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       } finally {
@@ -22,14 +32,29 @@ const EventsSection = () => {
     };
 
     getEvents();
+    
+    // Set up interval to check for active events every minute
+    const intervalId = setInterval(() => {
+      setEvents(prevEvents => {
+        const now = new Date();
+        return prevEvents.map(event => {
+          const startTime = new Date(event.startDateTime);
+          const endTime = new Date(event.endDateTime);
+          const isActive = now >= startTime && now <= endTime;
+          return { ...event, isActive };
+        });
+      });
+    }, 60000); // Check every minute
+    
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <section id="events" className="py-12 md:py-16">
+    <section id="events" className="py-12 md:py-16 bg-topo-pattern">
       <div className="container mx-auto px-4">
         <div className="flex items-center mb-8">
           <Calendar className="h-6 w-6 mr-3 text-forest" />
-          <h2 className="text-2xl md:text-3xl font-bold">Upcoming Events</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">Tulevat tapahtumat</h2>
         </div>
         
         {loading ? (
@@ -46,9 +71,9 @@ const EventsSection = () => {
           </div>
         ) : (
           <div className="text-center py-12 bg-muted/50 rounded-lg">
-            <h3 className="text-xl font-medium mb-2">No upcoming events</h3>
+            <h3 className="text-xl font-medium mb-2">Ei tulevia tapahtumia</h3>
             <p className="text-muted-foreground">
-              Check back soon for new orienteering events.
+              Tarkista myöhemmin uudet suunnistustapahtumat.
             </p>
           </div>
         )}

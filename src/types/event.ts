@@ -14,6 +14,7 @@ export interface Event {
   startDateTime: string;
   endDateTime: string;
   locationName: string;
+  streetAddress: string;
   coordinates: {
     lat: number;
     lon: number;
@@ -25,4 +26,8 @@ export interface Event {
   mapFile?: string;
   resultsLink?: string;
   isPast: boolean;
+  year?: number;
+  courseSetter?: string;
+  rastilippuLink?: string;
+  isActive?: boolean;
 }

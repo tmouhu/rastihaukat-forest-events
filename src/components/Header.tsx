@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Menu, X, MapPin, Calendar, Clock } from "lucide-react";
+import { Menu, X, MapPin, Calendar, Clock, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
@@ -17,19 +17,25 @@ const Header = () => {
           <div className="mr-2">
             <MapPin className="h-6 w-6 text-forest-dark" />
           </div>
-          <h1 className="text-xl md:text-2xl font-bold text-forest-dark">Rastihaukat</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-forest-dark">Itärastit</h1>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6 items-center">
           <a href="#events" className="text-foreground hover:text-forest-dark font-medium">
-            Upcoming Events
+            Tulevat tapahtumat
           </a>
           <a href="#past-events" className="text-foreground hover:text-forest-dark font-medium">
-            Past Events
+            Menneet tapahtumat
           </a>
-          <Button className="bg-forest hover:bg-forest-dark text-white">
-            Join Next Event
+          <a href="#archive" className="text-foreground hover:text-forest-dark font-medium">
+            Arkisto
+          </a>
+          <a href="#instructions" className="text-foreground hover:text-forest-dark font-medium">
+            Ohjeet
+          </a>
+          <Button className="bg-forest hover:bg-forest-dark text-forest-light font-semibold">
+            Opettele suunnistamaan
           </Button>
         </nav>
 
@@ -50,17 +56,34 @@ const Header = () => {
               className="py-2 text-foreground hover:text-forest-dark font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Upcoming Events
+              Tulevat tapahtumat
             </a>
             <a 
               href="#past-events" 
               className="py-2 text-foreground hover:text-forest-dark font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              Past Events
+              Menneet tapahtumat
             </a>
-            <Button className="bg-forest hover:bg-forest-dark text-white w-full">
-              Join Next Event
+            <a 
+              href="#archive" 
+              className="py-2 text-foreground hover:text-forest-dark font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Arkisto
+            </a>
+            <a 
+              href="#instructions" 
+              className="py-2 text-foreground hover:text-forest-dark font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Ohjeet
+            </a>
+            <Button 
+              className="bg-forest hover:bg-forest-dark text-forest-light font-semibold w-full"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Opettele suunnistamaan
             </Button>
           </div>
         </div>

@@ -1,21 +1,21 @@
 
 import { useEffect, useState } from "react";
 import { Event } from "@/types/event";
-import { fetchPastEvents } from "@/services/eventService";
+import { fetchArchiveEvents } from "@/services/eventService";
 import EventCard from "./EventCard";
-import { History } from "lucide-react";
+import { Archive } from "lucide-react";
 
-const PastEventsSection = () => {
+const ArchiveSection = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const data = await fetchPastEvents();
+        const data = await fetchArchiveEvents();
         setEvents(data);
       } catch (error) {
-        console.error("Error fetching past events:", error);
+        console.error("Error fetching archive events:", error);
       } finally {
         setLoading(false);
       }
@@ -25,11 +25,11 @@ const PastEventsSection = () => {
   }, []);
 
   return (
-    <section id="past-events" className="py-12 md:py-16 bg-muted/30">
+    <section id="archive" className="py-12 md:py-16 bg-earth/10">
       <div className="container mx-auto px-4">
         <div className="flex items-center mb-8">
-          <History className="h-6 w-6 mr-3 text-forest" />
-          <h2 className="text-2xl md:text-3xl font-bold">Menneet tapahtumat & Tulokset</h2>
+          <Archive className="h-6 w-6 mr-3 text-earth" />
+          <h2 className="text-2xl md:text-3xl font-bold">Arkisto</h2>
         </div>
         
         {loading ? (
@@ -46,9 +46,9 @@ const PastEventsSection = () => {
           </div>
         ) : (
           <div className="text-center py-12 bg-muted rounded-lg">
-            <h3 className="text-xl font-medium mb-2">Ei menneitä tapahtumia</h3>
+            <h3 className="text-xl font-medium mb-2">Ei arkistoituja tapahtumia</h3>
             <p className="text-muted-foreground">
-              Menneet tapahtumat ja tulokset näkyvät täällä.
+              Arkistoidut tapahtumat näkyvät täällä.
             </p>
           </div>
         )}
@@ -57,4 +57,4 @@ const PastEventsSection = () => {
   );
 };
 
-export default PastEventsSection;
+export default ArchiveSection;
