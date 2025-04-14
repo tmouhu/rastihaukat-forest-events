@@ -11,7 +11,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-forest/20">
+    <header className="sticky top-0 z-50 bg-white border-b border-forest/20">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center">
           <div className="mr-2">
@@ -34,7 +34,7 @@ const Header = () => {
           <a href="#instructions" className="text-foreground hover:text-forest-dark font-medium">
             Ohjeet
           </a>
-          <Button className="bg-forest hover:bg-forest-dark text-forest-light font-semibold">
+          <Button className="bg-forest hover:bg-forest-dark text-white font-semibold">
             Opettele suunnistamaan
           </Button>
         </nav>
@@ -80,7 +80,7 @@ const Header = () => {
               Ohjeet
             </a>
             <Button 
-              className="bg-forest hover:bg-forest-dark text-forest-light font-semibold w-full"
+              className="bg-forest hover:bg-forest-dark text-white font-semibold w-full"
               onClick={() => setIsMenuOpen(false)}
             >
               Opettele suunnistamaan

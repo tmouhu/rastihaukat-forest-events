@@ -11,10 +11,11 @@ import { format } from "date-fns";
 
 interface EventCardProps {
   event: Event;
+  expanded?: boolean;
 }
 
-const EventCard = ({ event }: EventCardProps) => {
-  const [expanded, setExpanded] = useState(false);
+const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps) => {
+  const [expanded, setExpanded] = useState(defaultExpanded);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -28,8 +29,22 @@ const EventCard = ({ event }: EventCardProps) => {
 
   const isUpcoming = !event.isPast;
 
+  // Mock image URL for demonstration purposes
+  const mapImageUrl = event.mapFile || "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
+
   return (
     <Card className={`w-full overflow-hidden transition-all duration-300 ${expanded ? 'shadow-md' : 'shadow-sm'} ${event.isActive ? 'ring-2 ring-brand-orange border-brand-orange' : ''}`}>
+      {/* Map Image at the top when available */}
+      {event.mapFile && (
+        <div className="w-full h-48 overflow-hidden">
+          <img 
+            src={mapImageUrl}
+            alt="Tapahtuman kartta" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+      
       <CardHeader className="p-4 pb-0">
         <div className="flex justify-between items-start">
           <Badge className={`event-type-badge ${event.eventType}`}>
@@ -50,8 +65,9 @@ const EventCard = ({ event }: EventCardProps) => {
         </div>
         <CardTitle className="text-lg sm:text-xl mt-2">{event.title}</CardTitle>
       </CardHeader>
+      
       <CardContent className="p-4">
-        <div className="flex flex-col space-y-3">
+        <div className="flex flex-col space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           <div className="flex items-start">
             <Calendar className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
             <div>
@@ -82,26 +98,51 @@ const EventCard = ({ event }: EventCardProps) => {
               </p>
             </div>
           </div>
-          
-          {isUpcoming && event.navigationLink && (
-            <div className="ml-8">
-              <Button variant="outline" size="sm" className="text-brand-blue" asChild>
-                <a href={event.navigationLink} target="_blank" rel="noopener noreferrer">
-                  <Navigation className="h-4 w-4 mr-2" />
-                  Navigoi
-                </a>
-              </Button>
+
+          {event.courseSetter && (
+            <div className="flex items-start">
+              <User className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium">Ratamestari</p>
+                <p className="text-sm">{event.courseSetter}</p>
+              </div>
             </div>
           )}
           
-          {isUpcoming && event.rastilippuLink && (
-            <div className="ml-8">
-              <Button variant="outline" size="sm" className="text-brand-orange" asChild>
-                <a href={event.rastilippuLink} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Ilmoittaudu Rastilipussa
-                </a>
-              </Button>
+          {/* Promote results for past events to be more visible */}
+          {event.isPast && event.resultsLink && (
+            <div className="flex items-start col-span-2">
+              <Medal className="h-5 w-5 mr-3 text-brand-red shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium">Tulokset</p>
+                <Button variant="link" className="h-auto p-0 text-brand-blue" asChild>
+                  <a href={event.resultsLink} target="_blank" rel="noopener noreferrer">
+                    Katso tulokset Navisportissa
+                  </a>
+                </Button>
+              </div>
+            </div>
+          )}
+          
+          {isUpcoming && (
+            <div className="col-span-2 flex flex-wrap gap-2 mt-2">
+              {isUpcoming && event.navigationLink && (
+                <Button variant="outline" size="sm" className="text-brand-blue" asChild>
+                  <a href={event.navigationLink} target="_blank" rel="noopener noreferrer">
+                    <Navigation className="h-4 w-4 mr-2" />
+                    Navigoi
+                  </a>
+                </Button>
+              )}
+              
+              {isUpcoming && event.rastilippuLink && (
+                <Button variant="outline" size="sm" className="text-brand-orange" asChild>
+                  <a href={event.rastilippuLink} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Ilmoittaudu Rastilipussa
+                  </a>
+                </Button>
+              )}
             </div>
           )}
         </div>
@@ -109,18 +150,6 @@ const EventCard = ({ event }: EventCardProps) => {
         {expanded && (
           <div className="mt-4 animate-fade-in">
             <Separator className="mb-4" />
-            
-            {event.courseSetter && (
-              <div className="mb-4">
-                <div className="flex items-start">
-                  <User className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Ratamestari</p>
-                    <p className="text-sm">{event.courseSetter}</p>
-                  </div>
-                </div>
-              </div>
-            )}
             
             {event.parkingInfo && (
               <div className="mb-4">
@@ -164,61 +193,32 @@ const EventCard = ({ event }: EventCardProps) => {
                 </div>
               </div>
             )}
-            
-            {event.isPast && event.resultsLink && (
-              <div className="mb-4">
-                <div className="flex items-start">
-                  <Medal className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Tulokset</p>
-                    <Button variant="link" className="h-auto p-0 text-brand-blue" asChild>
-                      <a href={event.resultsLink} target="_blank" rel="noopener noreferrer">
-                        Katso tulokset Navisportissa
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            {event.mapFile && (
-              <div className="rounded-md overflow-hidden border mt-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                  alt="Tapahtuman kartta" 
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-2 bg-muted flex justify-end">
-                  <Button variant="outline" size="sm">
-                    <FileText className="h-4 w-4 mr-2" />
-                    Katso koko kartta
-                  </Button>
-                </div>
-              </div>
-            )}
           </div>
         )}
       </CardContent>
-      <CardFooter className="p-2 bg-muted/50 flex justify-center">
-        <Button 
-          variant="ghost" 
-          size="sm"
-          onClick={() => setExpanded(!expanded)}
-          className="w-full text-muted-foreground hover:text-foreground"
-        >
-          {expanded ? (
-            <>
-              <ChevronUp className="h-4 w-4 mr-2" />
-              Näytä vähemmän
-            </>
-          ) : (
-            <>
-              <ChevronDown className="h-4 w-4 mr-2" />
-              Näytä lisää
-            </>
-          )}
-        </Button>
-      </CardFooter>
+      
+      {!expanded && event.tracks.length > 0 && (
+        <CardFooter className="p-2 bg-muted/50 flex justify-center">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => setExpanded(!expanded)}
+            className="w-full text-muted-foreground hover:text-foreground"
+          >
+            {expanded ? (
+              <>
+                <ChevronUp className="h-4 w-4 mr-2" />
+                Näytä vähemmän
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-4 w-4 mr-2" />
+                Näytä lisää
+              </>
+            )}
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };
