@@ -6,8 +6,10 @@ import EventCard from "./EventCard";
 import EventFilter from "./EventFilter";
 import { Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocalization } from "@/hooks/useLocalization";
 
 const EventsSection = () => {
+  const { t } = useLocalization();
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -94,7 +96,7 @@ const EventsSection = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center mb-8">
           <Calendar className="h-6 w-6 mr-3 text-forest" />
-          <h2 className="text-2xl md:text-3xl font-bold">Tulevat tapahtumat</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">{t("upcomingEventsTitle")}</h2>
         </div>
         
         <EventFilter onFilterChange={handleFilterChange} />
@@ -120,7 +122,7 @@ const EventsSection = () => {
                   variant="outline"
                   className="border-forest text-forest hover:bg-forest/10"
                 >
-                  Näytä kaikki tapahtumat
+                  {t("showAllEvents")}
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
@@ -132,16 +134,16 @@ const EventsSection = () => {
                   onClick={() => setShowAll(false)}
                   variant="outline"
                 >
-                  Näytä vähemmän
+                  {t("showFewerEvents")}
                 </Button>
               </div>
             )}
           </>
         ) : (
           <div className="text-center py-12 bg-muted/50 rounded-lg">
-            <h3 className="text-xl font-medium mb-2">Ei tulevia tapahtumia</h3>
+            <h3 className="text-xl font-medium mb-2">{t("noUpcomingEvents")}</h3>
             <p className="text-muted-foreground">
-              Tarkista myöhemmin uudet suunnistustapahtumat.
+              {t("checkLater")}
             </p>
           </div>
         )}

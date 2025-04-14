@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
+import { useLocalization } from "@/hooks/useLocalization";
 
 interface EventCardProps {
   event: Event;
@@ -16,6 +17,7 @@ interface EventCardProps {
 
 const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
+  const { t } = useLocalization();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -53,13 +55,13 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
           
           {event.isActive && (
             <Badge variant="outline" className="border-brand-orange text-brand-orange font-semibold">
-              Käynnissä nyt!
+              {t("activeNow")}
             </Badge>
           )}
           
           {event.isPast && event.resultsLink && (
             <Badge variant="outline" className="border-brand-red text-brand-red">
-              Tulokset saatavilla
+              {t("resultsAvailable")}
             </Badge>
           )}
         </div>
@@ -103,7 +105,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
             <div className="flex items-start">
               <User className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium">Ratamestari</p>
+                <p className="font-medium">{t("eventCourseSetter")}</p>
                 <p className="text-sm">{event.courseSetter}</p>
               </div>
             </div>
@@ -114,10 +116,10 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
             <div className="flex items-start col-span-2">
               <Medal className="h-5 w-5 mr-3 text-brand-red shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium">Tulokset</p>
+                <p className="font-medium">{t("eventResults")}</p>
                 <Button variant="link" className="h-auto p-0 text-brand-blue" asChild>
                   <a href={event.resultsLink} target="_blank" rel="noopener noreferrer">
-                    Katso tulokset Navisportissa
+                    {t("viewResults")}
                   </a>
                 </Button>
               </div>
@@ -130,7 +132,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
                 <Button variant="outline" size="sm" className="text-brand-blue" asChild>
                   <a href={event.navigationLink} target="_blank" rel="noopener noreferrer">
                     <Navigation className="h-4 w-4 mr-2" />
-                    Navigoi
+                    {t("navigate")}
                   </a>
                 </Button>
               )}
@@ -139,7 +141,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
                 <Button variant="outline" size="sm" className="text-brand-orange" asChild>
                   <a href={event.rastilippuLink} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-2" />
-                    Ilmoittaudu Rastilipussa
+                    {t("registerRastilippu")}
                   </a>
                 </Button>
               )}
@@ -156,7 +158,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
                 <div className="flex items-start">
                   <Car className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-medium">Pysäköinti</p>
+                    <p className="font-medium">{t("parking")}</p>
                     <p className="text-sm">{event.parkingInfo}</p>
                   </div>
                 </div>
@@ -165,7 +167,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
             
             {event.tracks.length > 0 && (
               <div className="mb-4">
-                <h4 className="font-medium mb-2">Radat</h4>
+                <h4 className="font-medium mb-2">{t("tracks")}</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {event.tracks.map((track, index) => (
                     <div key={index} className="flex items-center bg-muted rounded-md p-2">
@@ -187,7 +189,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
                 <div className="flex items-start">
                   <FileText className="h-5 w-5 mr-3 text-muted-foreground shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-medium">Lisätiedot</p>
+                    <p className="font-medium">{t("additionalInfo")}</p>
                     <p className="text-sm">{event.notes}</p>
                   </div>
                 </div>
@@ -208,12 +210,12 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
             {expanded ? (
               <>
                 <ChevronUp className="h-4 w-4 mr-2" />
-                Näytä vähemmän
+                {t("showLess")}
               </>
             ) : (
               <>
                 <ChevronDown className="h-4 w-4 mr-2" />
-                Näytä lisää
+                {t("showMore")}
               </>
             )}
           </Button>

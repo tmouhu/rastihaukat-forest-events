@@ -6,12 +6,14 @@ import { Search, Filter, X } from "lucide-react";
 import { EventType } from "@/types/event";
 import { Badge } from "@/components/ui/badge";
 import { getEventTypeName } from "@/services/eventService";
+import { useLocalization } from "@/hooks/useLocalization";
 
 interface EventFilterProps {
   onFilterChange: (filter: string, types: EventType[]) => void;
 }
 
 const EventFilter = ({ onFilterChange }: EventFilterProps) => {
+  const { t } = useLocalization();
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<EventType[]>([]);
@@ -44,7 +46,7 @@ const EventFilter = ({ onFilterChange }: EventFilterProps) => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               type="text"
-              placeholder="Haku tapahtumista..."
+              placeholder={t("searchEvents")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-9"
@@ -57,13 +59,13 @@ const EventFilter = ({ onFilterChange }: EventFilterProps) => {
             className="flex items-center"
           >
             <Filter className="h-4 w-4 mr-2" />
-            Suodata
+            {t("filter")}
           </Button>
         </div>
         
         {showFilters && (
           <div className="pt-3 border-t">
-            <h3 className="text-sm font-medium mb-2">Tapahtuman tyyppi</h3>
+            <h3 className="text-sm font-medium mb-2">{t("eventType")}</h3>
             <div className="flex flex-wrap gap-2">
               {eventTypes.map((type) => (
                 <Badge
@@ -90,7 +92,7 @@ const EventFilter = ({ onFilterChange }: EventFilterProps) => {
                 className="mt-2 text-muted-foreground"
               >
                 <X className="h-4 w-4 mr-1" />
-                Tyhjennä suodattimet
+                {t("clearFilters")}
               </Button>
             )}
           </div>

@@ -9,10 +9,12 @@ import EventCard from "@/components/EventCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EventFilter from "@/components/EventFilter";
+import { useLocalization } from "@/hooks/useLocalization";
 
 const SeasonArchive = () => {
   const { year, season } = useParams();
   const navigate = useNavigate();
+  const { t } = useLocalization();
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +72,11 @@ const SeasonArchive = () => {
     navigate('/#archive');
   };
 
-  const seasonTitle = season ? season.charAt(0).toUpperCase() + season.slice(1) : '';
+  const getSeasonName = (seasonKey: string) => {
+    return seasonKey === 'kevät' || seasonKey === 'spring' ? t('spring') : t('fall');
+  };
+
+  const seasonTitle = season ? getSeasonName(season.toLowerCase()) : '';
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -85,13 +91,13 @@ const SeasonArchive = () => {
                 className="flex items-center"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
-                Takaisin arkistoon
+                {t("backToArchive")}
               </Button>
               
               <div className="flex items-center">
                 <Archive className="h-6 w-6 mr-3 text-earth" />
                 <h2 className="text-2xl md:text-3xl font-bold">
-                  {year} {seasonTitle} kausi
+                  {t("seasonTitle", { year, season: seasonTitle })}
                 </h2>
               </div>
             </div>
@@ -113,9 +119,9 @@ const SeasonArchive = () => {
             ) : (
               <div className="text-center py-12 bg-muted rounded-lg">
                 <CalendarDays className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-xl font-medium mb-2">Ei tapahtumia löytynyt</h3>
+                <h3 className="text-xl font-medium mb-2">{t("noEventsFound")}</h3>
                 <p className="text-muted-foreground">
-                  Tällä kaudella ei ole tapahtumia tai hakuasi vastaavia tapahtumia ei löytynyt.
+                  {t("noEventsFoundDescription")}
                 </p>
               </div>
             )}
