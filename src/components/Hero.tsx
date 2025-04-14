@@ -9,10 +9,7 @@ const Hero = () => {
             <MapPin className="h-10 w-10 text-brand-orange" />
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Itärastit</h1>
-          <p className="text-lg md:text-xl mb-8 text-white/90">
-            Join our open training events in the beautiful forests around Helsinki.
-            All skill levels welcome - from beginners to experienced orienteers.
-          </p>
+          <p className="text-lg md:text-xl mb-8 text-white/90">Tule suunnistamaan keskeisiin paikkoihin julkisilla tai fillarilla. Hae haasteita Helsingin ja lähiympäristön kauniista metsistä. Itärasteille kaikki ovat tervetulleita kaikki aloittelijasta jo kokeneempiin suunnistajiin.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-brand-orange hover:bg-brand-orange/90 text-white" size="lg" asChild>
               <a href="#events">Näytä tuleva tapahtumat</a>
