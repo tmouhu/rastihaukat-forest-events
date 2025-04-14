@@ -257,6 +257,23 @@ export const fetchArchiveEvents = async (): Promise<Event[]> => {
   });
 };
 
+export const fetchSeasonEvents = async (year: number, season: string): Promise<Event[]> => {
+  const events = await fetchEvents();
+  const isSpring = season.toLowerCase() === "kevät" || season.toLowerCase() === "kevat";
+  
+  return events.filter(event => {
+    if (event.year !== year) return false;
+    
+    const eventMonth = new Date(event.startDateTime).getMonth() + 1;
+    // Spring: January-June, Fall: July-December
+    if (isSpring) {
+      return eventMonth <= 6;
+    } else {
+      return eventMonth > 6;
+    }
+  });
+};
+
 export const getEventTypeName = (type: EventType): string => {
   switch (type) {
     case "itarastit":

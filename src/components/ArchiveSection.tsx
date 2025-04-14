@@ -6,6 +6,7 @@ import { Archive, Calendar, ChevronRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 interface SeasonArchive {
   year: number;
@@ -102,11 +103,11 @@ const ArchiveSection = () => {
                     className="w-full mt-2 text-earth border-earth hover:bg-earth/10"
                     asChild
                   >
-                    <a href={`#archive/${season.year}/${season.season.toLowerCase()}`}>
+                    <Link to={`/archive/${season.year}/${season.season.toLowerCase()}`}>
                       <Calendar className="h-4 w-4 mr-2" />
                       Katso kausi
                       <ChevronRight className="ml-auto h-4 w-4" />
-                    </a>
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>

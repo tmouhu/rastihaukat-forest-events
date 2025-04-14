@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Filter, X } from "lucide-react";
@@ -18,10 +18,10 @@ const EventFilter = ({ onFilterChange }: EventFilterProps) => {
   
   const eventTypes: EventType[] = ["itarastit", "iterastit", "sprint"];
   
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    // Trigger search when text or filters change
     onFilterChange(searchTerm, selectedTypes);
-  };
+  }, [searchTerm, selectedTypes, onFilterChange]);
   
   const toggleEventType = (type: EventType) => {
     if (selectedTypes.includes(type)) {
@@ -34,12 +34,11 @@ const EventFilter = ({ onFilterChange }: EventFilterProps) => {
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedTypes([]);
-    onFilterChange("", []);
   };
   
   return (
     <div className="mb-6 bg-white p-4 rounded-lg shadow-sm">
-      <form onSubmit={handleSearch} className="flex flex-col space-y-3">
+      <div className="flex flex-col space-y-3">
         <div className="flex gap-2">
           <div className="relative flex-grow">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -59,9 +58,6 @@ const EventFilter = ({ onFilterChange }: EventFilterProps) => {
           >
             <Filter className="h-4 w-4 mr-2" />
             Suodata
-          </Button>
-          <Button type="submit" className="bg-forest text-white">
-            Hae
           </Button>
         </div>
         
@@ -99,7 +95,7 @@ const EventFilter = ({ onFilterChange }: EventFilterProps) => {
             )}
           </div>
         )}
-      </form>
+      </div>
     </div>
   );
 };
