@@ -8,20 +8,16 @@ const Hero = () => {
           <div className="flex justify-center mb-4">
             <MapPin className="h-10 w-10 text-brand-orange" />
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">
-            Rastihaukat Orienteering
-          </h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">Itärastit</h1>
           <p className="text-lg md:text-xl mb-8 text-white/90">
             Join our open training events in the beautiful forests around Helsinki.
             All skill levels welcome - from beginners to experienced orienteers.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-brand-orange hover:bg-brand-orange/90 text-white" size="lg" asChild>
-              <a href="#events">View Upcoming Events</a>
+              <a href="#events">Näytä tuleva tapahtumat</a>
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-white bg-forest-dark">
-              Learn About Orienteering
-            </Button>
+            <Button variant="outline" size="lg" className="border-white text-white bg-forest-dark">Näytä tulokset</Button>
           </div>
         </div>
       </div>
