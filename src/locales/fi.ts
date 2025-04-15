@@ -14,13 +14,13 @@ export const fi = {
   // Hero section
   heroTitle: "Itärastit",
   heroDescription: "Tule suunnistamaan keskeisiin paikkoihin julkisilla tai fillarilla. Hae haasteita Helsingin ja lähiympäristön kauniista metsistä. Itärasteille kaikki ovat tervetulleita kaikki aloittelijasta jo kokeneempiin suunnistajiin.",
-  showUpcomingEvents: "Näytä tuleva tapahtumat",
+  showUpcomingEvents: "Näytä tulevat tapahtumat",
   showResults: "Näytä tulokset",
   
   // Event sections
   upcomingEventsTitle: "Tulevat tapahtumat",
-  pastEventsTitle: "Menneet tapahtumat & Tulokset",
-  archiveTitle: "Tapahtumaarkisto",
+  pastEventsTitle: "Menneet tapahtumat & tulokset",
+  archiveTitle: "Tapahtuma-arkisto",
   instructionsTitle: "Ohjeet osallistujille",
   
   // Event details
@@ -49,10 +49,10 @@ export const fi = {
   clearFilters: "Tyhjennä suodattimet",
   
   // Archive
-  backToArchive: "Takaisin arkistoon",
-  seasonTitle: "{year} {season} kausi",
+  backToArchive: "Takaisin",
+  seasonTitle: "Tapahtumat {season}kausi {year}",
   events: "tapahtumaa",
-  viewSeason: "Katso kausi",
+  viewSeason: "Näytä kausi",
   
   // Messages
   noUpcomingEvents: "Ei tulevia tapahtumia",
@@ -69,8 +69,8 @@ export const fi = {
   showFewerEvents: "Näytä vähemmän",
   
   // Seasons
-  spring: "Kevät",
-  fall: "Syksy",
+  spring: "kevät",
+  fall: "syksy",
   
   // Instructions section
   whatIsItarastit: "Mitä on Itärastit?",

@@ -9,6 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { useLocalization } from "@/hooks/useLocalization";
+import rahaPosLogo from "@/assets/raha-logo-pos.svg";
+
 
 interface EventCardProps {
   event: Event;
@@ -32,7 +34,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
   const isUpcoming = !event.isPast;
 
   // Mock image URL for demonstration purposes
-  const mapImageUrl = event.mapFile || "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
+  const mapImageUrl = rahaPosLogo; // event.mapFile || 
 
   return (
     <Card className={`w-full overflow-hidden transition-all duration-300 ${expanded ? 'shadow-md' : 'shadow-sm'} ${event.isActive ? 'ring-2 ring-brand-orange border-brand-orange' : ''}`}>

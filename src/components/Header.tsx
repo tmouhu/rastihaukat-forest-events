@@ -1,9 +1,10 @@
 
 import { useState } from "react";
-import { Menu, X, MapPin } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocalization } from "@/hooks/useLocalization";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import kuusiIcon from "@/assets/kuusi-icon.svg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center">
           <div className="mr-2">
-            <MapPin className="h-6 w-6 text-forest-dark" />
+            <img src={kuusiIcon}  alt="Kuusi Icon" className="h-10 w-10" />
           </div>
           <h1 className="text-xl md:text-2xl font-bold text-forest-dark">{t("appName")}</h1>
         </div>

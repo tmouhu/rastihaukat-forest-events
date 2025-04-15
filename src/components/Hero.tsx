@@ -1,7 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { MapPin } from "lucide-react";
+import kuusiIcon from "@/assets/kuusi-icon.svg";
 import { useLocalization } from "@/hooks/useLocalization";
+import rahaLogoNegTxt from "@/assets/raha-logo-neg-txt.svg";
 
 const Hero = () => {
   const { t } = useLocalization();
@@ -12,10 +13,13 @@ const Hero = () => {
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <div className="max-w-3xl mx-auto text-center text-white">
           <div className="flex justify-center mb-4">
-            <MapPin className="h-10 w-10 text-brand-orange" />
+          <img src={kuusiIcon}  alt="Kuusi Icon" className="h-10 w-10" />
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{t("heroTitle")}</h1>
-          <p className="text-lg md:text-xl mb-8 text-white/90">{t("heroDescription")}</p>
+          <div className="mb-6">
+            <p className="text-lg md:text-xl text-white/90">{t("heroDescription")}</p>
+            <img src={rahaLogoNegTxt} alt="Raha logo" className="h-40 mx-auto" />
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-brand-orange hover:bg-brand-orange/90 text-white" size="lg" asChild>
               <a href="#events">{t("showUpcomingEvents")}</a>

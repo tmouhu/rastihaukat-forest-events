@@ -69,7 +69,7 @@ const PastEventsSection = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center mb-8">
           <History className="h-6 w-6 mr-3 text-forest" />
-          <h2 className="text-2xl md:text-3xl font-bold">Menneet tapahtumat & Tulokset</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">Menneet tapahtumat</h2>
         </div>
         
         <EventFilter onFilterChange={handleFilterChange} />
