@@ -21,6 +21,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/archive/:year/:season" element={<SeasonArchive />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<Index />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
