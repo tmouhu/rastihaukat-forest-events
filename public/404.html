@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Redirecting...</title>
-    <script>
-      // Redirect to index.html for any unknown route
-      const path = location.pathname.replace(/\/rastihaukat-forest-events/, '');
-      location.replace(`/rastihaukat-forest-events/?redirect=${path}${location.search}${location.hash}`);
-    </script>
-  </head>
-  <body>
-    Redirecting...
-  </body>
-</html>
+<script>
+    // Redirect all unknown routes to index.html (for client-side routing)
+    location.replace("/rastihaukat-forest-events/" + "index.html");
+  </script>
