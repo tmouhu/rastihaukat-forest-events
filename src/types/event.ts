@@ -7,27 +7,34 @@ export interface TrackInfo {
   difficulty: string;
 }
 
+export interface EventData {
+  data: Event[];
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    }
+  }
+}
+
 export interface Event {
   id: string;
+  documentId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
   title: string;
-  eventType: EventType;
   startDateTime: string;
   endDateTime: string;
   locationName: string;
   streetAddress: string;
-  coordinates: {
-    lat: number;
-    lon: number;
-  };
   parkingInfo?: string;
-  navigationLink?: string;
-  tracks: TrackInfo[];
+  navigationUrl?: string;
   notes?: string;
-  mapFile?: string;
-  resultsLink?: string;
-  isPast: boolean;
-  year?: number;
   courseSetter?: string;
-  rastilippuLink?: string;
-  isActive?: boolean;
+  eventUrl?: string;
+  resultsUrl?: string;
+  type: EventType;
 }

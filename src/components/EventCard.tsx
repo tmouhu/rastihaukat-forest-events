@@ -32,6 +32,8 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
   };
 
   const isUpcoming = !event.isPast;
+  const isActive = new Date(event.startDateTime) <= new Date() && new Date(event.endDateTime) >= new Date();
+  const isPast = new Date(event.endDateTime) < new Date();
 
   // Mock image URL for demonstration purposes
   const mapImageUrl = rahaPosLogo; // event.mapFile || 
@@ -43,7 +45,7 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
         <div className="w-full h-48 overflow-hidden">
           <img 
             src={mapImageUrl}
-            alt="Tapahtuman kartta" 
+            alt="Tapahtumakuva" 
             className="w-full h-full object-cover"
           />
         </div>
@@ -51,17 +53,17 @@ const EventCard = ({ event, expanded: defaultExpanded = false }: EventCardProps)
       
       <CardHeader className="p-4 pb-0">
         <div className="flex justify-between items-start">
-          <Badge className={`event-type-badge ${event.eventType}`}>
-            {getEventTypeName(event.eventType)}
+          <Badge className={`event-type-badge ${event.type}`}>
+            {getEventTypeName(event.type)}
           </Badge>
           
-          {event.isActive && (
+          {isActive && (
             <Badge variant="outline" className="border-brand-orange text-brand-orange font-semibold">
               {t("activeNow")}
             </Badge>
           )}
           
-          {event.isPast && event.resultsLink && (
+          {isPast && event.resultsUrl && (
             <Badge variant="outline" className="border-brand-red text-brand-red">
               {t("resultsAvailable")}
             </Badge>

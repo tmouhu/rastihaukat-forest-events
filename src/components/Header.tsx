@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocalization } from "@/hooks/useLocalization";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import kuusiIcon from "@/assets/kuusi-icon.svg";
+import rastilippu from "@/assets/rastilippu.svg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,8 +18,8 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-white border-b border-forest/20">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center">
-          <div className="mr-2">
-            <img src={kuusiIcon}  alt="Kuusi Icon" className="h-10 w-10" />
+          <div className="mr-2 shadow-xl">
+            <img src={rastilippu}  alt="rastilippu" className="h-5 w-5 shadow-[0_0_5px_rgba(255,165,0,0.9)]" />
           </div>
           <h1 className="text-xl md:text-2xl font-bold text-forest-dark">{t("appName")}</h1>
         </div>
